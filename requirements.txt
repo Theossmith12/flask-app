@@ -1,0 +1,8 @@
+flask==3.0.3
+requests==2.32.3
+gunicorn==23.0.0
+
+# Only needed once you add RDS / ElastiCache (safe to keep installed):
+flask-session==0.8.0
+redis==5.0.8
+psycopg2-binary==2.9.9

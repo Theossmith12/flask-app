@@ -1,0 +1,21 @@
+# Run the full stack locally first: docker compose up
+# Then open http://localhost:8080
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: notesdb
+  redis:
+    image: redis:7
+  app:
+    image: python:3.12-slim
+    working_dir: /app
+    volumes: [".:/app"]
+    command: sh -c "pip install -r requirements.txt && sleep 5 && gunicorn -w 2 -b 0.0.0.0:8080 app:app"
+    environment:
+      DB_HOST: db
+      DB_PASSWORD: postgres
+      REDIS_HOST: redis
+    ports: ["8080:8080"]
+    depends_on: [db, redis]
